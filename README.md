@@ -9,7 +9,7 @@ Falta incluir la descripción y la temática
 # install dependencies
 npm install
 
-# run in dev mode on port 3001
+# run in dev mode on port 3000
 npm start
 ```
 
