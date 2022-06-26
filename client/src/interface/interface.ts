@@ -1,4 +1,4 @@
-export interface NotesState {
+export interface TipadoState {
     notes: string[],
-    infoApi: string[]
+    infoApi: any
 }

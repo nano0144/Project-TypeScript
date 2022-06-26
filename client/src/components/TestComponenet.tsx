@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getInfo } from "../redux/actions";
-
+import { TipadoState } from "../interface/interface";
+import { useState } from "react";
 
 export const TestComponent = () => {
     const dispatch = useDispatch()
 
-    // const [note, setNote] = useState(""); // Luego veo si lo uso para 
+    const [search, setSearch] = useState<string>(""); // Luego veo si lo uso para 
     // el input de búsqueda
 
-    //const info = useSelector<InfoState, InfoState["ingo"]>((state)=> state.info)
-    
-    const info = ["un elemento"];
+    const infoApi = useSelector<TipadoState, TipadoState["infoApi"]>((state) => state.infoApi)
+    console.log('la info que llega al componente ', infoApi)
+    // const infoApi = ["un elemento"];
     /*
     0. creo la acción,
     1. disparo la acción,
@@ -18,21 +19,45 @@ export const TestComponent = () => {
     3. consumo el estado global,
     4. mapeo y renderizo
     */
-    const getVideos = () => {
-        //dispatch(getInfo());
+    const getVideos = (e : React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
 
-        console.log('llamo a la pai para los vídeos')
+        if (search) {
+            console.log('llamo a la pai con una búsqueda ', search)
+            
+            dispatch(getInfo(search));
+            
+            // dispatch(getInfo());
+        }
+        
+        
+        // console.log('llamo a la pai para los vídeos')
 
     }
 
 
     return (
         <div>
-            <button onClick={getVideos}>Llamar a la API</button>
+            <form action="formSearch">
+                <input type="search" value={search}
+                onChange={(e)=> setSearch(e.target.value)} />
+                <button onClick={(e)=> getVideos(e)}>Llamar a la API</button>
+            </form>
             <ul>
-                {info.map((note: string) => {
-                    return <p key={note}>{note}</p>
-                })}           
+                {infoApi.length > 0 ? infoApi.map((i: any) => {
+                   return <li key={i.etag}>{i.snippet.title}
+                   <img key={i} src={i.snippet.thumbnails.high.url} 
+                   alt={i.snippet.tittle}></img>
+                   </li>
+                }) : null}
+
+                {/* {infoApi.length >0 ? infoApi.map((i: any) => {
+                   return <img key={i} src={i.snippet.thumbnails.high.url} 
+                   alt={i.snippet.tittle}></img>
+
+                 
+                }) : null} */}
+                
 
             </ul>
         </div>

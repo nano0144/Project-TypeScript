@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NotesState } from "../src/interface/interface";
+import { TipadoState } from "../src/interface/interface";
 import { NewNoteInput } from "./components/NewNoteInput";
 import { TestComponent } from "./components/TestComponenet";
 import { addNote } from './redux/actions';
 
 
 function App() {
-  const notes = useSelector<NotesState, NotesState["notes"]>((state)=> state.notes)
+  const notes = useSelector<TipadoState, TipadoState["notes"]>((state)=> state.notes)
   const dispatch = useDispatch();
 
   const onAddNote = (note:string) => {

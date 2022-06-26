@@ -9,18 +9,31 @@ export const addNote = (note: string) => ({
 
 
 
-export async function getInfo() {
+// export async function getInfo() {
 
-    // export const getInfo = () => async (): Promise<any> => {
+export const getInfo = (search : string):any => async (dispatch: any): Promise<any> => {
     // dispatch actions, return Promise, etc.
     try {
         // let infoApi = await axios.get('http://localhost:3001/youtube/')
+        let infoApi = await axios({
+            method: 'GET',
+            url: 'http://localhost:3001/youtube/',
+            params: {
+                search: search,
+            }            
+        })
+        .then((response)=> {
+            // console.log(response.data.items, ' lo que responde la promesa')
+            return response.data.items;
+        })
+        .catch((err)=> console.log(err) )
+
+        dispatch ({
+            type: "GET_INFO",
+            payload: infoApi
+        })
 
         // console.log(infoApi, 'llama a la api y la api responde');
-        // return ({
-        //     type: "GET_INFO",
-        //     payload: infoApi
-        // })
 
     } catch (error) {
         console.log(error, 'error al llama a la api');
@@ -29,26 +42,8 @@ export async function getInfo() {
         //         payload: { error: error.message },
         //       });
 
+    
     }
 
 }
 
-
-// interface ServerResponse {
-//     data: ServerData
-// }
-
-// interface ServerData {
-//     foo: string
-//     bar: number
-// }
-//   Then you can say:
-
-// axios.request<ServerData>({
-//     url: 'https://example.com/path/to/data',
-//     transformResponse: (r: ServerResponse) => r.data
-// }).then((response) => {
-//     // `response` is of type `AxiosResponse<ServerData>`
-//     const { data } = response
-//     // `data` is of type ServerData, correctly inferred
-// })
