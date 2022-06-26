@@ -1,4 +1,4 @@
-# Project-TypeScript
+# YouVideo - Project-TypeScript
 
 YouVideo is a group project for build one single page application to do advance searches in YouTube data base, in order to find related results (videos, lists and channels).
 This project will has two main features:
