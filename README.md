@@ -3,7 +3,7 @@
 YouVideo is a group project for build one single page application to do advance searches in YouTube data base, in order to find related results (videos, lists and channels).
 This project will has two main features:
 1. An intuitive interface for advance search.
-2. Each query will has many result with links to Spotify and Apple Music, and some information about the result.
+2. Each query will has many results with links to Spotify and Apple Music, and some information about the result.
 
 
 ## Running the client
