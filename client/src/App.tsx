@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useDispatch } from "react-redux";
+import NewNoteInput from "./components/NewNoteInput";
+import TestComponent from "./components/TestComponenet";
+import { addNote } from './redux/actions';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // para poder rutear
+import ChannelDetail from "./components/ChannelDetail";
 
-function App() {
+
+export interface IAppProps {}
+
+const App: React.FunctionComponent<IAppProps> = (props) => {
+  
+  const dispatch = useDispatch();
+
+  const onAddNote = (note: string) => {
+    dispatch(addNote(note))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      
+      <BrowserRouter>
+        <Routes>
+          <Route path="/list" element={<NewNoteInput addNote={onAddNote} />}/>
+          <Route path="/" element={<TestComponent/> } />
+          <Route path="/channel/:channelId" element={<ChannelDetail/>} />
+        </Routes>        
+      </BrowserRouter>     
+    </>
   );
 }
 
