@@ -4,15 +4,16 @@ import { TipadoState } from "../interface/interface";
 import { useState } from "react";
 import React from 'react'
 import ReactPlayer from 'react-player/lazy';
+import { Link } from "react-router-dom";
 
-export interface ITestComponentsProps {};
+export interface ITestComponentsProps { };
 
 const TestComponent: React.FunctionComponent<ITestComponentsProps> = (props) => {
-// export const TestComponent = () => {
+    // export const TestComponent = () => {
     const dispatch = useDispatch()
 
     const [search, setSearch] = useState<string>(""); // Luego veo si lo uso para
-    const [videoUrl, setVideoUrl] = useState<string>(""); 
+    const [videoUrl, setVideoUrl] = useState<string>("");
     // el input de búsqueda
 
     const infoApi = useSelector<TipadoState, TipadoState["infoApi"]>((state) => state.infoApi)
@@ -25,65 +26,72 @@ const TestComponent: React.FunctionComponent<ITestComponentsProps> = (props) => 
     3. consumo el estado global,
     4. mapeo y renderizo
     */
-    const getVideos = (e : React.MouseEvent<HTMLButtonElement>) => {
+    const getVideos = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
         if (search) {
             console.log('llamo a la pai con una búsqueda ', search)
-            
+
             dispatch(getInfo(search));
-            
+
             // dispatch(getInfo());
         }
 
     }
 
-    
+
     //---------------------------------------------------------------------
     // https://www.youtube.com/watch?v=_w4sPyiNdBY&ab_channel=angeloDev
     // Y si uso ReactPlayer?
     //---------------------------------------------------------------------
     // https://www.npmjs.com/package/react-player
     //---------------------------------------------------------------------
-    
+
     const getUrlVideo = (idVideo: string, titleChannel: string) => {
         console.log(idVideo, titleChannel, 'lo que llega a función');
-        if (idVideo && titleChannel) {           
+        if (idVideo && titleChannel) {
             setVideoUrl(`https://www.youtube.com/watch?v=${idVideo}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`);
         }
     }
-    
+
 
 
     return (
         <div>
+            <div>
+                <Link to="/list">Ver lista de tareas para practicar</Link>
+                <p></p>
+            </div>
+            <hr />
+
             <form action="formSearch">
                 <input type="search" value={search}
-                onChange={(e)=> setSearch(e.target.value)} />
-                <button onClick={(e)=> getVideos(e)}>Llamar a la API</button>
+                    onChange={(e) => setSearch(e.target.value)} />
+                <button onClick={(e) => getVideos(e)}>Llamar a la API</button>
             </form>
             <h3>La url del vídeo</h3>
             {videoUrl ? videoUrl : null}
 
             <h3>La ventana del vídeo</h3>
             <div>
-            {videoUrl ? <ReactPlayer url={videoUrl} 
-            controls={true} config={{youtube:{playerVars:{'rel': 0,'showinfo': 0}}}}
-            /> : null}
+                {videoUrl ? <ReactPlayer url={videoUrl}
+                    controls={true} config={{ youtube: { playerVars: { 'rel': 0, 'showinfo': 0 } } }}
+                /> : null}
 
             </div>
-            <ul style={{listStyle: "none"}}>
+            <ul style={{ listStyle: "none" }}>
                 {infoApi.length > 0 ? infoApi.map((i: any) => {
-                   return <li key={i.etag}>
-                    <img key={i} src={i.snippet.thumbnails.high.url} 
-                    alt={i.snippet.tittle}></img> <br/> 
-                    <strong>{i.snippet.title}</strong><br/> 
-                    <p>{i.snippet.description}</p>
-                    <p>Id del canal: {i.snippet.channelId}</p>
-                    <button onClick={()=> getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
-                    >Get Video</button>
-                   
-                   </li>
+                    return <li key={i.etag}>
+                        <img key={i} src={i.snippet.thumbnails.high.url}
+                            alt={i.snippet.tittle}></img> <br />
+                        <strong>{i.snippet.title}</strong><br />
+                        <p>{i.snippet.description}</p>
+                        <p>Id del canal: {i.snippet.channelId}</p>
+                        <button onClick={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
+                        >Get Video</button>
+                        <Link to={`/channel/${i.snippet.channelId}`}>Visitar el canal</Link>
+
+                    </li>
                 }) : null}
             </ul>
         </div>

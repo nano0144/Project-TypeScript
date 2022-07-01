@@ -1,16 +1,15 @@
-import { useDispatch, useSelector } from "react-redux";
-// import { TipadoState } from "../src/interface/interface";
+import { useDispatch } from "react-redux";
 import NewNoteInput from "./components/NewNoteInput";
 import TestComponent from "./components/TestComponenet";
 import { addNote } from './redux/actions';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // para poder rutear
+import ChannelDetail from "./components/ChannelDetail";
 
 
 export interface IAppProps {}
 
 const App: React.FunctionComponent<IAppProps> = (props) => {
-
-  // const notes = useSelector<TipadoState, TipadoState["notes"]>((state) => state.notes)
+  
   const dispatch = useDispatch();
 
   const onAddNote = (note: string) => {
@@ -22,8 +21,9 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
       
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<NewNoteInput addNote={onAddNote} />}/>
-          <Route path="/videos" element={<TestComponent/> } />
+          <Route path="/list" element={<NewNoteInput addNote={onAddNote} />}/>
+          <Route path="/" element={<TestComponent/> } />
+          <Route path="/channel/:channelId" element={<ChannelDetail/>} />
         </Routes>        
       </BrowserRouter>     
     </>

@@ -19,7 +19,7 @@ export const Reducer = (state:TipadoState = initialState, action: Action) => {
         
         case "GET_CHANNEL_INFO":
             console.log('llega al reducer channelInfo', action.payload);
-            return {...state, channelInfoApi: [...state.channelInfoApi.concat(action.payload)]}
+            return {...state, channelInfoApi: action.payload }
 
 
         default:

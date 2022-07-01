@@ -41,7 +41,7 @@ export const getInfo = (search : string):any => async (dispatch: any): Promise<a
 // app.get("/channel", async (req: Request, res: Response) => {
 // let { channelId } = req.query; // "UCGnjeahCJW1AF34HBmQTJ-Q"
 
-export const getChannel = (channelId : string):any => async (dispatch: any): Promise<any> => {
+export const getChannel = (channelId : string | undefined ):any => async (dispatch: any): Promise<any> => {
     // dispatch actions, return Promise, etc.
     try {
         // let infoApi = await axios.get('http://localhost:3001/youtube/')

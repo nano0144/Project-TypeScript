@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { TipadoState } from "../../src/interface/interface";
-import { Link } from "react-router-dom";
+
 
 interface NewNoteInputProps {
     addNote(note: string): void;
@@ -43,7 +43,7 @@ const NewNoteInput: React.FC<NewNoteInputProps> = ({ addNote }) => {
 
                 </ul>
             </div>
-            <Link to="/videos">Ver videos YouTube</Link>
+            
 
 
         </div>
