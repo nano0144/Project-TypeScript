@@ -1,35 +1,31 @@
 import { useDispatch, useSelector } from "react-redux";
-import { TipadoState } from "../src/interface/interface";
-import { NewNoteInput } from "./components/NewNoteInput";
-import { TestComponent } from "./components/TestComponenet";
+// import { TipadoState } from "../src/interface/interface";
+import NewNoteInput from "./components/NewNoteInput";
+import TestComponent from "./components/TestComponenet";
 import { addNote } from './redux/actions';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'; // para poder rutear
 
 
-function App() {
-  const notes = useSelector<TipadoState, TipadoState["notes"]>((state)=> state.notes)
+export interface IAppProps {}
+
+const App: React.FunctionComponent<IAppProps> = (props) => {
+
+  // const notes = useSelector<TipadoState, TipadoState["notes"]>((state) => state.notes)
   const dispatch = useDispatch();
 
-  const onAddNote = (note:string) => {
+  const onAddNote = (note: string) => {
     dispatch(addNote(note))
   }
 
   return (
     <>
-      <h3>Agrega cosas a la lista</h3>
-      <p>Este input es manejado con un estado local de React y cada valor se
-        carga en el estado global de Redux, el flujo es el mismo pero puede 
-        haber algún detalle diferente.
-      </p>
-      <NewNoteInput addNote={onAddNote}/>
-      <hr />
-      <ul>
-        {notes.map((note:string) => {
-          return <li key={note}>{note}</li>
-        })}
-        
-      </ul>
-      <h3>Trato de consumir la api y renderizar</h3>
-      <TestComponent/>
+      
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<NewNoteInput addNote={onAddNote} />}/>
+          <Route path="/videos" element={<TestComponent/> } />
+        </Routes>        
+      </BrowserRouter>     
     </>
   );
 }

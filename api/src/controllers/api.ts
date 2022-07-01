@@ -65,33 +65,31 @@ export const loadApiEndpoints = (app: Application): void => {
   //---------------------------------------------------------------------
   
   app.get("/channel", async (req: Request, res: Response) => {
-
-    /* 
-    Me trae resultados de la búsqueda dentro del canal,
+    /* Me trae resultados de la búsqueda dentro del canal,
     siempre y cuando le pase el id del canal. Lo podría usar si
-    esto dentro del canal y quiero buscar algo allí.
-    */
+    esto dentro del canal y quiero buscar algo allí. */
+    
+    let { channelId } = req.query; // "UCGnjeahCJW1AF34HBmQTJ-Q"
 
-    console.log('entra en channel')
-
+    console.log('me llega el id del canal', channelId);
 
     let youTubeApi = "https://youtube.googleapis.com/youtube/v3/search";
     let part = "snippet";
-    let query = "te felicito";
+    // let query = "te felicito";
    
     const options = {
       method: 'GET',
       url: youTubeApi,
       params: {
         part: part,
-        q: query,
-        channelId: "UCGnjeahCJW1AF34HBmQTJ-Q",  
+        // q: query,
+        channelId: channelId,  
         key: APY_KEY
       },         
     };
 
     try {
-      promisResul = await axios.request(options)
+      let channelResuls = await axios.request(options)
       .then(function (response: any) {
         // console.log(response.data);
         return response.data;
@@ -102,7 +100,7 @@ export const loadApiEndpoints = (app: Application): void => {
         return error.data;
       });
   
-      return res.status(200).json(promisResul);
+      return res.status(200).json(channelResuls);
       
     } catch (error) {
 

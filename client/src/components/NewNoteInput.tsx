@@ -1,14 +1,19 @@
 import { ChangeEvent } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { TipadoState } from "../../src/interface/interface";
+import { Link } from "react-router-dom";
 
 interface NewNoteInputProps {
     addNote(note: string): void;
 }
 
-export const NewNoteInput: React.FC<NewNoteInputProps> = ({addNote}) => {
+const NewNoteInput: React.FC<NewNoteInputProps> = ({ addNote }) => {
     const [note, setNote] = useState("");
 
-    const updateNote = (event:ChangeEvent<HTMLInputElement>) => {
+    const notes = useSelector<TipadoState, TipadoState["notes"]>((state) => state.notes)
+
+    const updateNote = (event: ChangeEvent<HTMLInputElement>) => {
         setNote(event.target.value);
     }
 
@@ -19,9 +24,30 @@ export const NewNoteInput: React.FC<NewNoteInputProps> = ({addNote}) => {
 
     return (
         <div>
-            <input value={note} type="text" name="note" 
-            placeholder="Note" onChange={updateNote} />
-            <button onClick={onAddNoteClick} >Add note</button>
+            <h3>Agrega cosas a la lista</h3>
+            <p>Este input es manejado con un estado local de React y cada valor se
+                carga en el estado global de Redux, el flujo es el mismo pero puede
+                haber algún detalle diferente.
+            </p>
+            <div>
+                <input value={note} type="text" name="note"
+                    placeholder="Note" onChange={updateNote} />
+                <button onClick={onAddNoteClick} >Add note</button>
+            </div>
+            <div>
+                <hr />
+                <ul>
+                    {notes.map((note: string) => {
+                        return <li key={note}>{note}</li>
+                    })}
+
+                </ul>
+            </div>
+            <Link to="/videos">Ver videos YouTube</Link>
+
+
         </div>
     )
 }
+
+export default NewNoteInput;

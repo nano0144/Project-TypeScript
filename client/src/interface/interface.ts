@@ -1,4 +1,5 @@
 export interface TipadoState {
     notes: string[],
-    infoApi: any
+    infoApi: any,
+    channelInfoApi: any,
 }

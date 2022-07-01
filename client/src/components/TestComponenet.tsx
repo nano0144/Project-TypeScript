@@ -5,7 +5,10 @@ import { useState } from "react";
 import React from 'react'
 import ReactPlayer from 'react-player/lazy';
 
-export const TestComponent = () => {
+export interface ITestComponentsProps {};
+
+const TestComponent: React.FunctionComponent<ITestComponentsProps> = (props) => {
+// export const TestComponent = () => {
     const dispatch = useDispatch()
 
     const [search, setSearch] = useState<string>(""); // Luego veo si lo uso para
@@ -69,11 +72,6 @@ export const TestComponent = () => {
             /> : null}
 
             </div>
-
-         
-
-
-
             <ul style={{listStyle: "none"}}>
                 {infoApi.length > 0 ? infoApi.map((i: any) => {
                    return <li key={i.etag}>
@@ -81,6 +79,7 @@ export const TestComponent = () => {
                     alt={i.snippet.tittle}></img> <br/> 
                     <strong>{i.snippet.title}</strong><br/> 
                     <p>{i.snippet.description}</p>
+                    <p>Id del canal: {i.snippet.channelId}</p>
                     <button onClick={()=> getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
                     >Get Video</button>
                    
@@ -90,3 +89,5 @@ export const TestComponent = () => {
         </div>
     )
 }
+
+export default TestComponent;
