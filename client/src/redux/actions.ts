@@ -22,7 +22,7 @@ export const getInfo = (search : string):any => async (dispatch: any): Promise<a
         })
         .then((response)=> {
             // console.log(response.data.items, ' lo que responde la promesa')
-            return response.data.items;
+            return response.data;
         })
         .catch((err)=> console.log(err) )
 
@@ -53,8 +53,8 @@ export const getChannel = (channelId : string | undefined ):any => async (dispat
             }            
         })
         .then((response)=> {
-            console.log(response.data.items, ' lo que responde al get Channel Id')
-            return response.data.items;
+            // console.log(response.data.items, ' lo que responde al get Channel Id')
+            return response.data;
         })
         .catch((err)=> console.log(err) )
 
