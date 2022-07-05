@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'; // para poder rutear
 import MainView from "./components/MainView";
+import RigthList from "./components/RigthList";
 
 
 export interface IAppProps { }
@@ -12,6 +13,7 @@ const App: React.FunctionComponent<IAppProps> = (props) => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainView />} />
+          <Route path="/list" element={<RigthList />} />          
         </Routes>
       </BrowserRouter>
     </>

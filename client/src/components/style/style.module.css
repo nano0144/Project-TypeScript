@@ -1,0 +1,25 @@
+.listBox {
+    /* height: 150px;
+    width: 900px; */
+    height: 700px;
+    width: 150px;
+    background-color: antiquewhite;
+    /* justify-content: center;
+    display: flex; */
+    list-style: none;
+    display: flex;
+  
+    
+}
+
+.listItem {
+    height: 120px;
+    width: 100px;
+    background-color: darkgoldenrod;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    display: inline-block;
+    /* margin-right: 30px; */
+    margin-top: 20px;
+}
