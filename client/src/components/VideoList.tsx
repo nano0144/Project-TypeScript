@@ -12,7 +12,7 @@ const VideoList: React.FC<IVideoListProps> = (props) => {
     // const VideoList: React.FC<IVideoListProps> = ({ addNote }) => {
     // const [note, setNote] = useState("");
 
-    const notes = useSelector<TipadoState, TipadoState["notes"]>((state) => state.notes);
+    const listVideo = useSelector<TipadoState, TipadoState["listVideo"]>((state) => state.listVideo);
 
     // const updateNote = (event: ChangeEvent<HTMLInputElement>) => {
     //     setNote(event.target.value);
@@ -38,8 +38,8 @@ const VideoList: React.FC<IVideoListProps> = (props) => {
             </div> */}
             <div>
                 <ul>
-                    {notes.map((note: string) => {
-                        return <li key={note}>{note}</li>
+                    {listVideo.map((video: string) => {
+                        return <li key={video}>{video}</li>
                     })}
                 </ul>
             </div>

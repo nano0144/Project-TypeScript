@@ -1,5 +1,5 @@
 export interface TipadoState {
-    notes: any,
+    listVideo: any,
     infoApi: any,
     channelInfoApi: any,
 }

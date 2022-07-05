@@ -1,7 +1,7 @@
 import { TipadoState } from '../interface/interface';
 
 const initialState = {
-    notes: [],
+    listVideo: [],
     infoApi: {},
     channelInfoApi: {},
 }
@@ -11,7 +11,7 @@ type Action = {type: string , payload: any}
 export const Reducer = (state:TipadoState = initialState, action: Action) => {
     switch (action.type) {
         case "ADD_NOTE":
-            return {...state, notes: [...state.notes, action.payload]}
+            return {...state, listVideo: [...state.listVideo, action.payload]}
             
         case "GET_INFO":
             // console.log('llega al reducer', action.payload);

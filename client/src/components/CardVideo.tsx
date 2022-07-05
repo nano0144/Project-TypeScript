@@ -9,7 +9,7 @@ interface ICardVideoProps {
     channelTitle: string,
     getUrlVideo: any,
     getChannel: any,
-    addNewNote: any,
+    addVideoList: any,
 };
 
 
@@ -26,7 +26,7 @@ const CardVideo: React.FC<ICardVideoProps> = (props) => {
             >Reproducir</button>
             <button onClick={() => props.getChannel(props.channelId, "channelVideos")}
             >Get - Ver Channel</button>
-            <button onClick={() => props.addNewNote(props.videoId)}
+            <button onClick={() => props.addVideoList(props.videoId)}
             >Agregar video</button>
         </div>
     )

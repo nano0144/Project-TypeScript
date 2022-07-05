@@ -9,7 +9,9 @@ import CardVideoChannel from "./CardVideoChannel";
 import { getChannel } from "../redux/actions"
 import { addNote } from "../redux/actions";
 
-export interface IMainVideoProps { };
+export interface IMainVideoProps { 
+    
+};
 
 const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
     const dispatch = useDispatch()
@@ -21,7 +23,7 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
 
     const infoApi = useSelector<TipadoState, TipadoState["infoApi"]>((state) => state.infoApi)
     const channelInfoApi = useSelector<TipadoState, TipadoState["channelInfoApi"]>((state) => state.channelInfoApi)
-    const notes = useSelector<TipadoState, TipadoState["notes"]>((state) => state.notes)
+    const listVideo = useSelector<TipadoState, TipadoState["listVideo"]>((state) => state.listVideo)
     
     // console.log('la info que llega al componente ', infoApi)
 
@@ -52,7 +54,7 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
     }
 
 
-    const addNewNote = (idVideo: string) => {
+    const addVideoList = (idVideo: string) => {
         console.log(idVideo, 'el id del vídeo que llega')
 
         let noteUrl = `https://www.youtube.com/watch?v=${idVideo}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`
@@ -80,8 +82,8 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
     }
 
     const playList = () => {
-        if (notes.length > 0 ) {
-            setVideoUrl(notes);
+        if (listVideo.length > 0 ) {
+            setVideoUrl(listVideo);
         }
     }
 
@@ -132,7 +134,7 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
                             channelTitle={i.snippet.channelTitle}
                             getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
                             getChannel={() => getChannelId(i.snippet.channelId, "channelVideos")}
-                            addNewNote={() => addNewNote(i.id.videoId)}
+                            addVideoList={() => addVideoList(i.id.videoId)}
                         />
                     </li>
                 }) : null}
@@ -152,7 +154,7 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
                             channelTitle={i.snippet.channelTitle}
                             getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
                             goBack={() => goBack("videos")}
-                            addNewNote={() => addNewNote(i.id.videoId)}
+                            addVideoList={() => addVideoList(i.id.videoId)}
                         />
                     </li>
                 }) : null}

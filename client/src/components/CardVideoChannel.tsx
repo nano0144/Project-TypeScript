@@ -8,7 +8,7 @@ interface ICardVideoChannelProps {
     channelTitle: string,
     getUrlVideo: any,
     goBack: any,
-    addNewNote: any,
+    addVideoList: any,
 
 };
 
@@ -26,7 +26,7 @@ const CardVideoChannel: React.FC<ICardVideoChannelProps> = (props) => {
             <button onClick={() => props.getUrlVideo(props.videoId, props.channelTitle)}
             >Reproducir</button>
             <button onClick={() => props.goBack("videos")}>Volver</button>
-            <button onClick={() => props.addNewNote(props.videoId)}
+            <button onClick={() => props.addVideoList(props.videoId)}
             >Agregar video</button>
         </div>
     )

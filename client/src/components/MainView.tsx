@@ -1,29 +1,33 @@
 import MainVideo from "./MainVideo";
 import VideoList from "./VideoList";
-import { addNote } from '../redux/actions';
-import { useDispatch } from "react-redux";
+import RigthList from "./RigthList";
+// import { addNote } from '../redux/actions';
+// import { useDispatch } from "react-redux";
 
 interface IMainViewProps { };
 
 
 const MainView: React.FC<IMainViewProps> = (props) => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    const onAddNote = (note: string) => {
-        dispatch(addNote(note))
-    }
+    // const onAddNote = (note: string) => {
+    //     dispatch(addNote(note))
+    // }
 
 
     return (
         <div>
             <h3>Main View</h3>
-            <div className="main-video">
+            <div className="mainVideo">
                 <MainVideo />
             </div>
             <h3>Lista de videos</h3>
-            <div className="list-video">
+            <div className="listVideo">
                 {/* <VideoList addNote={onAddNote} /> */}
                 <VideoList />
+            </div>
+            <div className="rigthList">
+                <RigthList/>
             </div>
 
         </div>
