@@ -1,10 +1,14 @@
 import axios from "axios";
 
-export type Action = { type: "ADD_NOTE", payload: string };
+export type Action = { type: "ADD_VIDEO", payload: object };
 
 
-export const addNote = (video: string) => ({
-    type: "ADD_NOTE", payload: video
+export const addVideo = (video: object) => ({
+    type: "ADD_VIDEO", payload: video
+})
+
+export const updateList = (video: object[]) => ({
+    type: "UPDATE_LIST", payload: video
 })
 
 

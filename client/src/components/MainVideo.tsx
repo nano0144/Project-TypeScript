@@ -7,7 +7,7 @@ import ReactPlayer from 'react-player/lazy';
 import CardVideo from "./CardVideo";
 import CardVideoChannel from "./CardVideoChannel";
 import { getChannel } from "../redux/actions"
-import { addNote } from "../redux/actions";
+import { addVideo } from "../redux/actions";
 
 export interface IMainVideoProps { 
     
@@ -54,12 +54,22 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
     }
 
 
-    const addVideoList = (idVideo: string) => {
-        console.log(idVideo, 'el id del vídeo que llega')
+    const addVideoList = (v: any) => {
+        console.log(v, 'el id del vídeo que llega')
 
-        let noteUrl = `https://www.youtube.com/watch?v=${idVideo}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`
+        let newObjectVideo: object = { 
+            index: listVideo.length,
+            info : {
+                videoId: v.id.videoId,
+                title: v.snippet.title,
+                imageM: v.snippet.thumbnails.default.url
+            }
+        }
 
-        dispatch(addNote(noteUrl))
+        console.log(newObjectVideo, ' el objeto creado para la play list');
+        // let noteUrl = `https://www.youtube.com/watch?v=${idVideo}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`
+
+        dispatch(addVideo(newObjectVideo))
     }
 
     //---------------------------------------------------------------------
@@ -82,8 +92,18 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
     }
 
     const playList = () => {
+        console.log(listVideo, 'cuando pido la playlist');
+
+        let playList: string[] = [];
+
         if (listVideo.length > 0 ) {
-            setVideoUrl(listVideo);
+            playList = listVideo.map((v: any)=> {
+                return `https://www.youtube.com/watch?v=${v.info.videoId}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`
+            })
+        }
+        console.log(playList, 'como queda la playlist');
+        if (listVideo.length > 0 ) {
+            setVideoUrl(playList);
         }
     }
 
@@ -134,7 +154,7 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
                             channelTitle={i.snippet.channelTitle}
                             getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
                             getChannel={() => getChannelId(i.snippet.channelId, "channelVideos")}
-                            addVideoList={() => addVideoList(i.id.videoId)}
+                            addVideoList={() => addVideoList(i)}
                         />
                     </li>
                 }) : null}
@@ -154,7 +174,7 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
                             channelTitle={i.snippet.channelTitle}
                             getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
                             goBack={() => goBack("videos")}
-                            addVideoList={() => addVideoList(i.id.videoId)}
+                            addVideoList={() => addVideoList(i)}
                         />
                     </li>
                 }) : null}

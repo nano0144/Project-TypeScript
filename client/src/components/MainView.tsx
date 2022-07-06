@@ -1,6 +1,6 @@
 import MainVideo from "./MainVideo";
-import VideoList from "./VideoList";
 import RigthList from "./RigthList";
+// import VideoList from "./VideoList";
 // import { addNote } from '../redux/actions';
 // import { useDispatch } from "react-redux";
 
@@ -21,11 +21,11 @@ const MainView: React.FC<IMainViewProps> = (props) => {
             <div className="mainVideo">
                 <MainVideo />
             </div>
-            <h3>Lista de videos</h3>
+            {/* <h3>Lista de videos</h3>
             <div className="listVideo">
-                {/* <VideoList addNote={onAddNote} /> */}
+                <VideoList addNote={onAddNote} />
                 <VideoList />
-            </div>
+            </div> */}
             <div className="rigthList">
                 <RigthList/>
             </div>
