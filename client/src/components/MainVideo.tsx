@@ -8,9 +8,10 @@ import CardVideo from "./CardVideo";
 import CardVideoChannel from "./CardVideoChannel";
 import { getChannel } from "../redux/actions"
 import { addVideo } from "../redux/actions";
+import style from "./style/style.module.css";
 
-export interface IMainVideoProps { 
-    
+export interface IMainVideoProps {
+
 };
 
 const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
@@ -18,20 +19,21 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
 
     const [view, setView] = useState<string>("videos"); // Luego veo si lo uso para
     const [search, setSearch] = useState<string>(""); // Luego veo si lo uso para
+    const [memoSearch, setMemoSearch] = useState<string>("");
     // const [videoUrl, setVideoUrl] = useState<string>(""); // el input de búsqueda
     const [videoUrl, setVideoUrl] = useState<string[]>([`https://www.youtube.com/watch?v=dAqaQU1FrFQ?showinfo=0&enablejsapi=1&origin=https://localhost:3000`]); // el input de búsqueda
 
     const infoApi = useSelector<TipadoState, TipadoState["infoApi"]>((state) => state.infoApi)
     const channelInfoApi = useSelector<TipadoState, TipadoState["channelInfoApi"]>((state) => state.channelInfoApi)
     const listVideo = useSelector<TipadoState, TipadoState["listVideo"]>((state) => state.listVideo)
-    
+
     // console.log('la info que llega al componente ', infoApi)
-
-
+    let fiveImage = "https://www.pngmart.com/files/14/5-Number-PNG-Background-Image.png";
     const getVideos = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (search) {
             console.log('llamo a la pai con una búsqueda ', search)
+            setMemoSearch(search);
             dispatch(getInfo(search));
         }
     }
@@ -57,9 +59,9 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
     const addVideoList = (v: any) => {
         console.log(v, 'el id del vídeo que llega')
 
-        let newObjectVideo: object = { 
+        let newObjectVideo: object = {
             index: listVideo.length,
-            info : {
+            info: {
                 videoId: v.id.videoId,
                 title: v.snippet.title,
                 imageM: v.snippet.thumbnails.default.url
@@ -67,7 +69,6 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
         }
 
         console.log(newObjectVideo, ' el objeto creado para la play list');
-        // let noteUrl = `https://www.youtube.com/watch?v=${idVideo}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`
 
         dispatch(addVideo(newObjectVideo))
     }
@@ -86,42 +87,35 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
             //let newVideoUrl: string[] = [...videoUrl.concat(newUrl)]
             setVideoUrl([`https://www.youtube.com/watch?v=${idVideo}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`]);
             // setVideoUrl([...videoUrl.concat(newUrl)]);
-            
-            
+
+
         }
     }
 
+    // Tal vez debería manejar esto con un estado global
     const playList = () => {
         console.log(listVideo, 'cuando pido la playlist');
 
         let playList: string[] = [];
 
-        if (listVideo.length > 0 ) {
-            playList = listVideo.map((v: any)=> {
+        if (listVideo.length > 0) {
+            playList = listVideo.map((v: any) => {
                 return `https://www.youtube.com/watch?v=${v.info.videoId}?showinfo=0&enablejsapi=1&origin=https://localhost:3000`
             })
         }
         console.log(playList, 'como queda la playlist');
-        if (listVideo.length > 0 ) {
+        if (listVideo.length > 0) {
             setVideoUrl(playList);
         }
     }
-
-    // <ReactPlayer
-    //     url={[
-    //         'https://www.youtube.com/watch?v=oUFJJNQGwhk',
-    //         'https://www.youtube.com/watch?v=jNgP6d9HraI'
-    //     ]}
-    // />
-
 
 
 
 
     return (
         <div>
-            <h3>La ventana del vídeo</h3>
-            <div>
+            {/* <h3>La ventana del vídeo</h3> */}
+            <div className={style.mainVideo}>
                 {/* <ReactPlayer url={videoUrl}
                     controls={true} config={{ youtube: { playerVars: { 'rel': 0, 'showinfo': 0 } } }}
                 /> */}
@@ -132,53 +126,73 @@ const MainVideo: React.FunctionComponent<IMainVideoProps> = (props) => {
 
             <h5>Url del vídeo {videoUrl ? JSON.stringify(videoUrl) : null}</h5>
 
-            <button onClick={() => playList()}>Reproducir lista</button>
+            <div className={style.mainSearch}>
+                <h4>Input de búsqueda</h4>
+                <form action="formSearch">
+                    <input type="search" value={search}
+                        onChange={(e) => setSearch(e.target.value)} />
+                    <button onClick={(e) => getVideos(e)}>Buscar</button>
+                </form>
+                <button onClick={() => playList()}>Reproducir lista</button>
+            </div>
 
+            <div className={style.mainResults}>
+                <ul className={style.mainCardVideo}>
+                    {infoApi.items && view === "videos" && <h2>Resultado relacionados a: {memoSearch} </h2>}
+                    {infoApi.items && infoApi.items.length > 0 && view === "videos" ? infoApi.items.map((i: any) => {
+                        return <li key={i.id.videoId} className={style.cardVideo}>
+                            <CardVideo
+                                image={i.snippet.thumbnails.medium.url}
+                                title={i.snippet.title}
+                                description={i.snippet.description}
+                                channelId={i.snippet.channelId}
+                                videoId={i.id.videoId}
+                                channelTitle={i.snippet.channelTitle}
+                                getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
+                                getChannel={() => getChannelId(i.snippet.channelId, "channelVideos")}
+                                addVideoList={() => addVideoList(i)}
+                            />
+                        </li>
+                    }) : null}
+                    {infoApi.items && infoApi.items.length > 0 && view === "videos" ? (
+                        <li key="next" className={style.cardVideo5}>
+                            <div className={style.boxImage5}>
+                                <img src={fiveImage} className={style.imageCardVideo5}
+                                    alt={"five"}></img>
+                            </div>
+                            <strong>{""}</strong><br />
+                            <button>Prev</button>
+                            <button>Next</button>
+                        </li>) : null}
 
-            <h4>Input de búsqueda</h4>
-            <form action="formSearch">
-                <input type="search" value={search}
-                    onChange={(e) => setSearch(e.target.value)} />
-                <button onClick={(e) => getVideos(e)}>Llamar a la API</button>
-            </form>
-
-            <ul style={{ listStyle: "none" }}>
-                {infoApi.items && infoApi.items.length > 0 && view === "videos" ? infoApi.items.map((i: any) => {
-                    return <li key={i.id.videoId}>
-                        <CardVideo
-                            image={i.snippet.thumbnails.high.url}
-                            title={i.snippet.title}
-                            description={i.snippet.description}
-                            channelId={i.snippet.channelId}
-                            videoId={i.id.videoId}
-                            channelTitle={i.snippet.channelTitle}
-                            getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
-                            getChannel={() => getChannelId(i.snippet.channelId, "channelVideos")}
-                            addVideoList={() => addVideoList(i)}
-                        />
-                    </li>
-                }) : null}
-            </ul>
-
-            <ul style={{ listStyle: "none" }}>
-                <hr />
-                {channelInfoApi.items && channelInfoApi.items.length > 0 && view === "channelVideos" ? <h2>Channel Title: {channelInfoApi.items[0].snippet.channelTitle}</h2> : null}
-                {channelInfoApi.items && channelInfoApi.items.length > 0 && view === "channelVideos" ? channelInfoApi.items.map((i: any) => {
-                    return <li key={i.id.videoId}>
-                        <CardVideoChannel
-                            image={i.snippet.thumbnails.high.url}
-                            title={i.snippet.title}
-                            description={i.snippet.description}
-                            channelId={i.snippet.channelId}
-                            videoId={i.id.videoId}
-                            channelTitle={i.snippet.channelTitle}
-                            getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
-                            goBack={() => goBack("videos")}
-                            addVideoList={() => addVideoList(i)}
-                        />
-                    </li>
-                }) : null}
-            </ul>
+                    {channelInfoApi.items && channelInfoApi.items.length > 0 && view === "channelVideos" ? <h2>Channel Title: {channelInfoApi.items[0].snippet.channelTitle}</h2> : null}
+                    {channelInfoApi.items && channelInfoApi.items.length > 0 && view === "channelVideos" ? channelInfoApi.items.map((i: any) => {
+                        return <li key={i.id.videoId} className={style.cardVideo}>
+                            <CardVideoChannel
+                                image={i.snippet.thumbnails.medium.url}
+                                title={i.snippet.title}
+                                description={i.snippet.description}
+                                channelId={i.snippet.channelId}
+                                videoId={i.id.videoId}
+                                channelTitle={i.snippet.channelTitle}
+                                getUrlVideo={() => getUrlVideo(i.id.videoId, i.snippet.channelTitle)}
+                                goBack={() => goBack("videos")}
+                                addVideoList={() => addVideoList(i)}
+                            />
+                        </li>
+                    }) : null}
+                    {channelInfoApi.items && channelInfoApi.items.length > 0 && view === "channelVideos" ? (
+                        <li key="next" className={style.cardVideo5}>
+                            <div className={style.boxImage5}>
+                                <img src={fiveImage} className={style.imageCardVideo5}
+                                    alt={"five"}></img>
+                            </div>
+                            <strong>{""}</strong><br />
+                            <button>Prev</button>
+                            <button>Next</button>
+                        </li>) : null}
+                </ul>
+            </div>
         </div>
     )
 }

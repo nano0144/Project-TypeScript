@@ -1,25 +1,187 @@
-.listBox {
-    /* height: 150px;
-    width: 900px; */
-    height: 700px;
-    width: 150px;
-    background-color: antiquewhite;
-    /* justify-content: center;
-    display: flex; */
-    list-style: none;
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.mainBox {
+    /* La caja principal */
+    background-color: rgb(103, 158, 246);
+    position: absolute;
+    height: 100%;
+    width: 100%;
     display: flex;
-  
-    
+}
+
+.mainCenterBox {
+    /* La caja central que contiene el video y los resultados */
+    background-color: rgb(237, 176, 246);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    /* align-items: center;  para centrar un div dentro de otro div */
+    position: relative;
+    height: 100%;
+    width: 70%;
+}
+
+.mainLeftList {
+    /* La caja de la derecha */
+    background-color: rgb(102, 163, 96);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    /* align-items: center;  para centrar un div dentro de otro div */
+    position: relative;
+    height: 100%;
+    width: 15%;
+    right: 0%;
+}
+
+.mainRigthList {
+    /* La caja de la izquierda */
+    background-color: rgb(102, 163, 96);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    /* align-items: center;  para centrar un div dentro de otro div */
+    position: relative;
+    height: 100%;
+    width: 15%;
+
+}
+
+.mainVideo {
+    background-color: rgb(227, 137, 88);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    /* align-items: center;  para centrar un div dentro de otro div */
+    position: relative;
+    height: 42%;
+    width: auto;
+    top: 0px;
+    padding-top: 2%;
+    padding-bottom: 1%;
+    bottom: 0px;
+}
+
+.mainSearch {
+    background-color: rgb(227, 137, 88);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    height: 3%;
+    width: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+
+}
+
+.mainResults {
+    background-color: rgb(70, 191, 200);
+    display: flex;
+    max-height: 50%;
+    min-height: 50%;
+    width: auto;
+    justify-content: center;
+    /* padding-bottom: 0px;
+    margin-bottom: 0px;
+    border-bottom: 0px; */
+
+}
+
+.rigthlistBox {
+    background-color: rgb(239, 96, 111);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    /* align-items: center;  /* para centrar un div dentro de otro div */
+    top: 3%;
+    position: relative;
+    min-height: 85%;
+    max-height: 85%;
+    min-width: 500%;
+    max-width: 500%;
+}
+
+.leftlistBox {
+    background-color: rgb(239, 96, 111);
+    display: flex;
+    /* para centrar un div dentro de otro div */
+    justify-content: center;
+    /* para centrar un div dentro de otro div */
+    /* align-items: center;  /* para centrar un div dentro de otro div */
+    top: 3%;
+    position: relative;
+    min-height: 85%;
+    max-height: 85%;
+    min-width: 80%;
+    max-width: 80%;
 }
 
 .listItem {
-    height: 120px;
-    width: 100px;
-    background-color: darkgoldenrod;
     list-style: none;
-    display: flex;
-    justify-content: space-around;
+}
+
+.mainCardVideo {
+    background-color: rgba(239, 103, 96, 0.761);
+    list-style: "none";
+    width: 90%;
     display: inline-block;
-    /* margin-right: 30px; */
-    margin-top: 20px;
+
+}
+
+.cardVideo {
+    display: inline-block;
+    background-color: rgb(79, 94, 237);
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-bottom: 0%;
+    /* margin: 2%; */
+    width: 29.3%;
+    height: 40%;
+}
+.boxImage {
+    background-color: rgb(237, 79, 232);
+    width: 100%;
+    height: 100%;
+}
+.boxImage5 {
+    background-color: rgb(237, 79, 232);
+    width: 100%;
+    height: 70%;
+}
+
+.cardVideo5 {
+    display: inline-block;
+    background-color: rgb(79, 94, 237);
+    margin: 2%;
+    width: 29.3%;
+    height: 40%;
+}
+
+.videoDescription {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.imageCardVideo {
+    max-width: 75%;
+    max-height: 60%;
+}
+
+.imageCardVideo5 {
+    max-width: 60%;
+    max-height: 60%;
+
 }

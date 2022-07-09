@@ -6,6 +6,8 @@ import { TipadoState } from "../interface/interface";
 import { updateList } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
+
+
 interface IRigthListProps {
 }
 
@@ -26,17 +28,19 @@ interface IObjectVideoInfo {
 
 
 const RigthList: React.FC<IRigthListProps> = (props) => {
-    const [videoList, setVideoList] = useState<IObjectVideo[]>([{ index: 0, info: {videoId: "", title: "", imageM: ""}}])
-    const [newVideo, setNewVideo] = useState<IObjectVideo>({ index: 0, info: {videoId: "", title: "", imageM: ""}});
-    const [transport, setTransport] = useState<IObjectVideo>({ index: 0, info: {videoId: "", title: "", imageM: ""}});
+    const [videoList, setVideoList] = useState<IObjectVideo[]>([{ index: 0, info: { videoId: "", title: "", imageM: "" } }])
+    const [newVideo, setNewVideo] = useState<IObjectVideo>({ index: 0, info: { videoId: "", title: "", imageM: "" } });
+    const [transport, setTransport] = useState<IObjectVideo>({ index: 0, info: { videoId: "", title: "", imageM: "" } });
 
     const listVideo = useSelector<TipadoState, TipadoState["listVideo"]>((state) => state.listVideo);
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         setVideoList(listVideo);
 
-    },[listVideo])
+    }, [listVideo])
+
+
 
 
 
@@ -52,7 +56,7 @@ const RigthList: React.FC<IRigthListProps> = (props) => {
         // console.log("sale el drag");
         // value se toma del elemento al cual se arrastra
         // console.log(index, info, 'lo que sale'); // ejemplo --> "1"
-        setTransport({index: Number(index), info: info});
+        setTransport({ index: Number(index), info: info });
     }
 
 
@@ -65,10 +69,11 @@ const RigthList: React.FC<IRigthListProps> = (props) => {
         let newIndex: number = Number(value);
         let data: IInfo = transport.info; // Guarda la copia info que se mueve
 
-        let newStateInfo : IObjectVideoInfo[] = videoList.map((d:IObjectVideo)=>{
-            return {info: d.info} });
+        let newStateInfo: IObjectVideoInfo[] = videoList.map((d: IObjectVideo) => {
+            return { info: d.info }
+        });
 
-        newStateInfo.splice(newIndex, 0, {info: transport.info});
+        newStateInfo.splice(newIndex, 0, { info: transport.info });
 
         if (newIndex > oldIndex) {
             newStateInfo.splice(oldIndex, 1);
@@ -79,7 +84,7 @@ const RigthList: React.FC<IRigthListProps> = (props) => {
 
         let newState: IObjectVideo[] = [];
 
-        for (var i = 0 ; i < newStateInfo.length ; i++) {
+        for (var i = 0; i < newStateInfo.length; i++) {
 
             let element = {
                 index: videoList[i].index,
@@ -96,14 +101,14 @@ const RigthList: React.FC<IRigthListProps> = (props) => {
     //     setNewVideo({ index: videoList.length, info: {videoId: "", title: value, imageM: ""} })
     // }
 
-    const removeItem = (value:number) => {
+    const removeItem = (value: number) => {
         let newState = [...videoList];
         newState.splice(value, 1);
         // Voy a recorrer para reasignar valores a los ìndices
         // para que siga funcionando todo
 
-        for (let i = value ; i < newState.length ; i++) {
-            newState[i].index = i ;
+        for (let i = value; i < newState.length; i++) {
+            newState[i].index = i;
         }
         setVideoList(newState);
         // console.log(newState, value, ' el nuúmero que me llega');
@@ -113,16 +118,17 @@ const RigthList: React.FC<IRigthListProps> = (props) => {
 
 
     return (
-        <div>
-            <h2>Playlist</h2>
+        <div className={style.mainRigthList}>
             {/* <form>
                 <input type="text" value={newVideo.info.title}
-                    onChange={(e) => onChangeNewVideo(e.target.value)} />
-
+                onChange={(e) => onChangeNewVideo(e.target.value)} />
+                
                 <button onClick={(e) => addVideo(e)}>Agregar Video</button>
             </form> */}
-            <div className={style.listBox}>
+            {/* <h2>Playlist</h2> */}
+            <div className={style.rigthlistBox}>
                 <ul>
+
                     {videoList.map((video: IObjectVideo) => {
                         return <li className={style.listItem} draggable="true"
                             key={video.index}
@@ -130,17 +136,23 @@ const RigthList: React.FC<IRigthListProps> = (props) => {
                             onDragOver={(e) => e.preventDefault()}
                             onDragStart={() => onDrag(video.index, video.info)}
                             onDrop={() => onDrop(video.index)}
-                        >   {video.info.title} <br/>
-                        <button onClick={()=>removeItem(video.index)}
-                        >x</button>
-                        <img src={video.info.imageM} alt={video.info.title} />
+                        >   
+                            <img src={video.info.imageM} alt={video.info.title}/>
+                            <p className={style.videoDescription}>{video.info.title}</p>
+                            <button onClick={() => removeItem(video.index)}
+                            >x</button>
                         </li>
                     })}
+
                 </ul>
             </div>
-            {videoList ? JSON.stringify(videoList) : null}
+             
+           
+                
+            
+            {/* {videoList ? JSON.stringify(videoList) : null}
             <p></p>
-            {newVideo ? JSON.stringify(newVideo) : null}
+            {newVideo ? JSON.stringify(newVideo) : null} */}
 
         </div>
     )
